@@ -2,6 +2,8 @@
 
 require 'pry-byebug'
 
+part_one = false
+
 file = File.open('input')
 
 first_line = file.readline.chomp
@@ -43,8 +45,19 @@ file.readlines(chomp: true).each do |line|
   source_stack = line[3].to_i - 1
   destination_stack = line[5].to_i - 1
 
-  number_of_crates.times do
-    stacks[destination_stack] << stacks[source_stack].pop
+  if part_one
+    number_of_crates.times do
+      stacks[destination_stack] << stacks[source_stack].pop
+    end
+  else
+    temp_stack = []
+    number_of_crates.times do
+      temp_stack << stacks[source_stack].pop
+    end
+
+    until temp_stack.empty?
+      stacks[destination_stack] << temp_stack.pop
+    end
   end
 end
 
